@@ -9,20 +9,25 @@ db = db.ExistDB(server_url=EXISTDB_SERVER_URL, username='admin', password='')
 
 
 def ferQuary():
-    query =ent_nom.get()
-    res = db.executeQuery(query)
-    hits = db.getHits(res)
-    for i in range(hits):
-        lbl_nom.config(text=db.retrieve(res, i))
-        print(db.retrieve(res, i))
+    try:
+        query =ent_nom.get()
+        res = db.executeQuery(query)
+        hits = db.getHits(res)
+        text = ""
+        for i in range(hits):
+            text += str(db.retrieve(res, i))+"\n"
+        lbl_nom.config(text=text)
+        print(text)
+    except (Exception ) as error:
+        lbl_nom.config(text="T'has equivocat amb la busqueda")
 
 
 window = tk.Tk()
 window.title('AleixC')
 
 lbl_nom = tk.Label(master=window,
-    text=" ",
-    foreground="green",  # Set the text color to white
+    text="",
+    foreground="#00FF00",  # Set the text color to white
     background="black",  # Set the background color to black
     width="80",
     justify=tk.LEFT
